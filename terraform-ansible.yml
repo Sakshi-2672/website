@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+    - name: cleaning files
+      shell: sudo rm -rf ~/website
+
+    - name: pull
+      shell: sudo git clone https://github.com/Sakshi-2672/website.git
+      
+    - name: docker kill
+      shell: sudo docker stop ansapp1 || true && docker rm ansapp1 || true
+
+    - name: docker build
+      shell: sudo docker build -t sakshi05/ansapp1 ~/website/
+
+    - name: docker run
+      shell: sudo docker run -it -d --name ansapp1 -p 3100:80 sakshi05/ansapp1
